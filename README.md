@@ -1,5 +1,5 @@
 # docker installations
-`docker pull anirudh0090/monitoring-agent:v3`
+`docker pull anirudh0090/monitoring-agent:v4`
 
 ## instructions to use script in ubuntu
 1. `sudo apt update && sudo apt upgrade -y`
@@ -25,4 +25,33 @@ U will find the logs at http://public-ip-instance/api/metrics
 --yet to be done
 
 # Sample user data file for ubuntu img
---yet to be done
+- paste the following content into User data
+```
+#!/bin/bash
+
+set -e  # Exit on error
+
+LOG_FILE="/var/log/userdata.log"
+
+# Redirect all output (stdout & stderr) to the log file, except for specified commands
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+echo "Hostname: $(hostname)"
+sudo apt update -y >/dev/null 2>&1 && sudo apt upgrade -y >/dev/null 2>&1
+echo "Installation done (APT logs ignored)"
+# sudo apt-get remove -y docker docker-engine docker.io containerd runc
+# the upper line is usually needed but for some reason the script errors out if the line is not commented
+
+
+sudo apt install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+
+
+sudo docker pull anirudh0090/monitoring-agent:v4
+sudo docker run -d -p 80:3000 anirudh0090/monitoring-agent:v4
+echo "Reached the end of user data"
+```
+
+- to check the logs in case of container not starting, u can check the logs from this script by running
+`sudo cat /var/logs/userdata.log`
