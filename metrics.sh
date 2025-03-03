@@ -1,8 +1,6 @@
 #!/bin/sh
 # metrics.sh - Script to collect system metrics
-LOG_FILE="/home/ec2-user/system_metrics.log"
-
-# Create log file if it doesn't exist
+LOG_FILE="/app/logs/system_metrics.log"
 mkdir -p $(dirname $LOG_FILE)
 touch $LOG_FILE
 

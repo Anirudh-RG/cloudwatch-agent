@@ -34,7 +34,7 @@ async function readMetricsFile(filePath) {
 // Endpoint to retrieve metrics
 app.get('/api/metrics', async (req, res) => {
   try {
-    const metricsData = await readMetricsFile('./system_metrics.log');
+    const metricsData = await readMetricsFile('/app/logs/system_metrics.log');
     res.json(metricsData);
   } catch (error) {
     res.status(500).json({ error: error.message });

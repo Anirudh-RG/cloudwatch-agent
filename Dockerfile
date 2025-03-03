@@ -20,8 +20,8 @@ COPY start.sh .
 
 # Make scripts executable
 RUN chmod +x /app/metrics.sh /app/start.sh
+RUN mkdir -p /app/logs
 
-# Expose the server port
 EXPOSE 3000
 
 # Start both the metrics collector and API server

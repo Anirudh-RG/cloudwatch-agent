@@ -2,20 +2,18 @@
 # start.sh - Script to start the metrics collector and API server
 
 # Run the metrics script once at startup
-./metrics.sh
+/app/metrics.sh
 
-# Ensure cronie is installed and running
-sudo yum install cronie -y
-sudo systemctl enable crond
-sudo systemctl start crond
+# Setup cron job
+echo "* * * * * /app/metrics.sh" > /tmp/crontab
+crontab /tmp/crontab
+rm /tmp/crontab
 
-# Add cron job only if it doesn't already exist
-crontab -l 2>/dev/null | grep -q "/app/metrics.sh" || (crontab -l 2>/dev/null; echo "* * * * * /home/ec2-user/metrics.sh") | crontab -
+# Start cron daemon (Alpine way)
+crond -b -L /app/logs/cron.log
 
-# Start cron daemon as a service (no need for manual execution)
-sudo systemctl restart crond
+echo "Started cron service"
 
-# Start the Node.js server (if applicable)
+# Start the Node.js server in the foreground
+echo "Starting Node.js server..."
 node /app/server.js
-
-echo "reached end of script"
