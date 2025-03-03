@@ -2,22 +2,22 @@
 `docker pull anirudh0090/monitoring-agent:v3`
 
 ## instructions to use script in ubuntu
-`sudo apt update && sudo apt upgrade -y`
-`sudo apt-get remove docker docker-engine docker.io`
-`sudo apt-get update`
-`sudo apt install docker.io -y`
+1. `sudo apt update && sudo apt upgrade -y`
+2. `sudo apt-get remove docker docker-engine docker.io`
+3. `sudo apt-get update`
+4. `sudo apt install docker.io -y`
 
 ## install & run docker img for the project
 
-`sudo su` # all following commands require elevated previlages
-`systemctl status docker`
-if "disabled" or "inactive"
-`systemctl enable docker`
-`systemctl start docker`
-if running & active then "
-`docker pull anirudh0090/monitoring-agent:v4`
-RUN docker images & find the img u just installed
-`docker run -p 80:3000 <container_id(from docker images)>` # dont include "< >" just the container id
+1. `sudo su` # all following commands require elevated previlages
+2. `systemctl status docker`
+### if "disabled" or "inactive"
+3. `systemctl enable docker`
+4. `systemctl start docker`
+### if running & active then "
+5. `docker pull anirudh0090/monitoring-agent:v4`
+### RUN docker images & find the img u just installed
+6. `docker run -p 80:3000 <container_id(from docker images)>` # dont include "< >" just the container id
 
 U will find the logs at http://public-ip-instance/api/metrics
 
