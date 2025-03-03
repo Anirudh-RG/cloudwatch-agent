@@ -1,10 +1,10 @@
-FROM node:22-alpine3.20
-
+FROM node:22-slim
 # Install required system tools
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     procps \
-    dcron \
-    vim
+    cron \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
 
 # Create app directory
 WORKDIR /app

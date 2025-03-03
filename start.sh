@@ -1,19 +1,16 @@
-#!/bin/sh
-# start.sh - Script to start the metrics collector and API server
-
-# Run the metrics script once at startup
+#!/bin/bash
+# Run metrics script once at startup
 /app/metrics.sh
 
-# Setup cron job
-echo "* * * * * /app/metrics.sh" > /tmp/crontab
-crontab /tmp/crontab
-rm /tmp/crontab
+# Add cron job
+(crontab -l 2>/dev/null | grep -q "metrics.sh") || (crontab -l 2>/dev/null; echo "* * * * * /app/metrics.sh") | crontab -
 
-# Start cron daemon (Alpine way)
-crond -b -L /app/logs/cron.log
+# Start cron service
+service cron start
 
-echo "Started cron service"
+# Verify cron jobs
+echo "Cron configuration:"
+crontab -l
 
-# Start the Node.js server in the foreground
-echo "Starting Node.js server..."
+# Start Node.js server
 node /app/server.js
