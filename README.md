@@ -1,5 +1,6 @@
 # docker installations
 `docker pull anirudh0090/monitoring-agent:v4`
+use :v5 for cors supprort(# imporrant)
 
 ## instructions to use script in ubuntu
 1. `sudo apt update && sudo apt upgrade -y`
